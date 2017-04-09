@@ -1,4 +1,3 @@
-// BuffPanel.h - Contains declaration of Function class  
 #pragma once
 
 #ifdef BUFFPANEL_SDK_EXPORTS
@@ -10,7 +9,6 @@
 #include <string>
 
 namespace BuffPanel {
-	// This class is exported from the BuffPanelSDK.dll
 	class BuffPanel {
 	public:
 		static BUFFPANEL_SDK_API void track(
