@@ -1,7 +1,7 @@
 // BuffPanel.cpp : Defines the exported functions for the DLL application.  
 // Compile by using: cl /EHsc /DBUFFPANEL_SDK_EXPORTS /LD BuffPanel.cpp  
 
-#include "../include/BuffPanel.h"
+#include "../../include/BuffPanel.h"
 
 #include <iostream>
 #include <string>

@@ -165,7 +165,7 @@
     <ClInclude Include="include\BuffPanel.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\BuffPanel.cpp" />
+    <ClCompile Include="source\sdk\BuffPanel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
