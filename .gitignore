@@ -1,0 +1,16 @@
+# OS specific files.
+.DS_Store
+Thumbs.db
+
+# IDEs configuration files.
+.vs/*
+
+# Intellisense generated files.
+ipch/*
+**/*.VC.db
+**/*.VC.opendb
+
+# Build generated files.
+Debug/*
+Release/*
+x64/*
