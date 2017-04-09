@@ -11,4 +11,5 @@ ipch/*
 *.VC.opendb
 
 # Build generated files.
-bin/*
+build/*
+dist/*
