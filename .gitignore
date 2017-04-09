@@ -7,8 +7,8 @@ Thumbs.db
 
 # Intellisense generated files.
 ipch/*
-*.VC.db
-*.VC.opendb
+*.db
+*.opendb
 
 # Build generated files.
 build/*

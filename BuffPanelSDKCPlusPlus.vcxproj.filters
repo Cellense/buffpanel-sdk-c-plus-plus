@@ -20,7 +20,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\sdk\BuffPanel.cpp">
+    <ClCompile Include="Source\BuffPanelSDKCPlusPlus\BuffPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

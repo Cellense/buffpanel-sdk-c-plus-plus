@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\demo\Main.cpp" />
+    <ClCompile Include="Source\BuffPanelSDKCPlusPlusDemo\Main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8A93E610-A479-4BAF-985E-14A21ECD6DA9}</ProjectGuid>
@@ -75,22 +75,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build\debug\demo\windows_x86\</OutDir>
-    <IntDir>build\debug\demo\windows_x86\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows32bit\</OutDir>
+    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows32bit\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)build\release\demo\windows_x86\</OutDir>
-    <IntDir>build\release\demo\windows_x86\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows32bit\</OutDir>
+    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows32bit\</IntDir>
     <ReferencePath>$(SolutionDir)bin\$(VC_ReferencesPath_x86);</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)build\release\demo\windows_x64\</OutDir>
-    <IntDir>build\release\demo\windows_x64\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows64bit\</OutDir>
+    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows64bit\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)build\debug\demo\windows_x64\</OutDir>
-    <IntDir>build\debug\demo\windows_x64\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows64bit\</OutDir>
+    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows64bit\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,7 +103,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)build\debug\sdk\windows_x86\BuffPanelSDKCPlusPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Build\$(Configuration)\BuffPanelSDKCPlusPlus\Windows32bit\BuffPanelSDKCPlusPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,7 +117,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)build\debug\sdk\windows_x64\BuffPanelSDKCPlusPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Build\$(Configuration)\BuffPanelSDKCPlusPlus\Windows64bit\BuffPanelSDKCPlusPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -135,10 +135,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)build\release\sdk\windows_x86\BuffPanelSDKCPlusPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Build\$(Configuration)\BuffPanelSDKCPlusPlus\Windows32bit\BuffPanelSDKCPlusPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)build\release\demo\windows_x86\BuffPanelSDKCPlusPlusDemo.exe" "$(SolutionDir)dist\windows_x86\"</Command>
+      <Command>xcopy "$(OutDir)BuffPanelSDKCPlusPlusDemo.exe" "$(SolutionDir)Dist\Windows32bit\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -156,10 +156,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)build\release\sdk\windows_x64\BuffPanelSDKCPlusPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Build\$(Configuration)\BuffPanelSDKCPlusPlus\Windows64bit\BuffPanelSDKCPlusPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)build\release\demo\windows_x64\BuffPanelSDKCPlusPlusDemo.exe" "$(SolutionDir)dist\windows_x64\"</Command>
+      <Command>xcopy "$(OutDir)BuffPanelSDKCPlusPlusDemo.exe" "$(SolutionDir)Dist\Windows64bit\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

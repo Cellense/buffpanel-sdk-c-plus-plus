@@ -71,23 +71,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build\debug\sdk\windows_x86\</OutDir>
-    <IntDir>build\debug\sdk\windows_x86\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows32bit\</OutDir>
+    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows32bit\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build\debug\sdk\windows_x64\</OutDir>
-    <IntDir>build\debug\sdk\windows_x64\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows64bit\</OutDir>
+    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows64bit\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)build\release\sdk\windows_x86\</OutDir>
-    <IntDir>build\release\sdk\windows_x86\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows32bit\</OutDir>
+    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows32bit\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)build\release\sdk\windows_x64\</OutDir>
-    <IntDir>build\release\sdk\windows_x64\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows64bit\</OutDir>
+    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows64bit\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,7 +136,7 @@
       <FullProgramDatabaseFile>false</FullProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)build\release\sdk\windows_x86\BuffPanelSDKCPlusPlus.dll" "$(SolutionDir)dist\windows_x86\" &amp;&amp; cp "$(SolutionDir)build\release\sdk\windows_x86\BuffPanelSDKCPlusPlus.lib" "$(SolutionDir)dist\windows_x86\"</Command>
+      <Command>xcopy "$(OutDir)BuffPanelSDKCPlusPlus.dll" "$(SolutionDir)Dist\Windows32bit\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSDKCPlusPlus.lib" "$(SolutionDir)Dist\Windows32bit\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,14 +158,14 @@
       <FullProgramDatabaseFile>false</FullProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)build\release\sdk\windows_x64\BuffPanelSDKCPlusPlus.dll" "$(SolutionDir)dist\windows_x64\" &amp;&amp; cp "$(SolutionDir)build\release\sdk\windows_x64\BuffPanelSDKCPlusPlus.lib" "$(SolutionDir)dist\windows_x64\"</Command>
+      <Command>xcopy "$(OutDir)BuffPanelSDKCPlusPlus.dll" "$(SolutionDir)Dist\Windows64bit\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSDKCPlusPlus.lib" "$(SolutionDir)Dist\Windows64bit\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\BuffPanel.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\sdk\BuffPanel.cpp" />
+    <ClCompile Include="Source\BuffPanelSDKCPlusPlus\BuffPanel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
