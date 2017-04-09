@@ -1,4 +1,4 @@
-#include "../../include/BuffPanel.h"
+#include "../../Include/BuffPanel.h"
 
 #include <iostream>
 #include <string>
