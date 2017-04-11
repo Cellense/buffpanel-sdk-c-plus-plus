@@ -71,30 +71,38 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows32bit\</OutDir>
-    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows32bit\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Platform)$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>Build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>$(SolutionDir)Reference\Include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)Reference\Library\Windows\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows64bit\</OutDir>
-    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows64bit\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Platform)$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>Build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>$(SolutionDir)Reference\Include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)Reference\Library\Windows\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows32bit\</OutDir>
-    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows32bit\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Platform)$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>Build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>$(SolutionDir)Reference\Include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)Reference\Library\Windows\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Build\$(Configuration)\$(ProjectName)\Windows64bit\</OutDir>
-    <IntDir>Build\$(Configuration)\$(ProjectName)\Windows64bit\</IntDir>
+    <OutDir>$(SolutionDir)Build\$(Platform)$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>Build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>$(SolutionDir)Reference\Include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)Reference\Library\Windows\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>POCO_STATIC;WIN32;_DEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -108,7 +116,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>POCO_STATIC;_DEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -124,7 +132,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>POCO_STATIC;WIN32;NDEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -146,7 +154,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>POCO_STATIC;NDEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
