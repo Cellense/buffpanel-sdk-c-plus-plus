@@ -2,7 +2,7 @@
 #define BUFFPANEL_H
 
 #ifdef _WIN32
-#	ifdef BUFFPANEL_SDK_EXPORTS	
+#	ifdef BUFFPANEL_SDK_EXPORTS
 #		define BUFFPANEL_SDK_API __declspec(dllexport)
 #	else
 #		define BUFFPANEL_SDK_API __declspec(dllimport)
@@ -14,13 +14,35 @@
 #include <string>
 
 namespace BuffPanel {
+	struct Result {
+		bool isSuccessful;
+		std::string errorMessage;
+
+		Result()
+			: Result(true, "")
+		{}
+
+		Result(bool newIsSuccessful, const std::string& newErrorMessage)
+			: isSuccessful(newIsSuccessful)
+			, errorMessage(newErrorMessage)
+		{}
+	};
+
 	class BuffPanel {
 	public:
-		static BUFFPANEL_SDK_API void track(
+		static BUFFPANEL_SDK_API Result track(
 			const std::string& gameToken,
 			const std::string& playerToken,
 			const bool isFirstRun
 		);
+	private:
+		static bool _isTracked;
+
+		static std::string _endpointUrl;
+		static std::string _version;
+
+		static double _initialRetryOffset;
+		static int _maxRetryCount;
 	};
 }
 
