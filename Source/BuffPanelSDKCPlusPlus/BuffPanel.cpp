@@ -20,12 +20,6 @@ std::string BuffPanel::BuffPanel::_version = "1.0.0";
 double BuffPanel::BuffPanel::_initialRetryOffset = 0.25f;
 int BuffPanel::BuffPanel::_maxRetryCount = 10;
 
-std::streamsize BuffPanel::BuffPanel::retrieveContentLength(
-	Poco::JSON::Object& jsonPayload
-)
-{
-}
-
 BuffPanel::Result BuffPanel::BuffPanel::track(
 	const std::string& gameToken,
 	const std::string& playerToken,
