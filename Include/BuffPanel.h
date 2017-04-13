@@ -16,15 +16,11 @@
 namespace BuffPanel {
 	struct Result {
 		bool isSuccessful;
-		std::string errorMessage;
+		std::string message;
 
 		Result()
-			: Result(true, "")
-		{}
-
-		Result(bool newIsSuccessful, const std::string& newErrorMessage)
-			: isSuccessful(newIsSuccessful)
-			, errorMessage(newErrorMessage)
+			: isSuccessful(false)
+			, message("An unknown error had ocurred")
 		{}
 	};
 
