@@ -9,7 +9,9 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 
-#include <iostream>
+#include <istream>
+#include <ostream>
+#include <sstream>
 #include <string>
 
 bool BuffPanel::BuffPanel::_isTracked = false;
@@ -32,7 +34,6 @@ BuffPanel::Result BuffPanel::BuffPanel::track(
 	if (_isTracked) {
 		return result;
 	}
-	_isTracked = true;
 
 	try {
 		// Parse the endpoint URI.
@@ -66,45 +67,27 @@ BuffPanel::Result BuffPanel::BuffPanel::track(
 		request.setContentType("application/json");
 		request.setContentLength(jsonPayloadStringStream.str().size());
 
-		// Configure the iteration variables.
-		bool isRequestSuccessfull(false);
-		double retryOffset(_initialRetryOffset);
+		// Send the request.
+		std::ostream& requestPayloadStream = session.sendRequest(request);
+		jsonPayload.stringify(requestPayloadStream);
 
-		for (int retryCount = 0; retryCount < _maxRetryCount; ++retryCount) {
-			try {
-				// Send the request.
-				std::ostream& requestPayloadStream = session.sendRequest(request);
-				jsonPayload.stringify(requestPayloadStream);
-
-				// Receive the response.
-				Poco::Net::HTTPResponse response;
-				std::istream& responsePayloadStream = session.receiveResponse(response);
+		// Receive and parse the response.
+		Poco::Net::HTTPResponse response;
+		std::istream& responsePayloadStream = session.receiveResponse(response);
+		Poco::JSON::Parser jsonParser;
+		jsonParser.parse(responsePayloadStream);
 				
-				// Validate the response.
-				if (response.getStatus() == Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK) {
-					isRequestSuccessfull = true;
-					result.errorMessage = "";
-				} else {
-					result.errorMessage = "An invalid response was recieved from the server";
-				}
-			} catch (Poco::Exception& exception) {
-				result.errorMessage = exception.displayText();
-			}
+		// Validate the response.
+		if (response.getStatus() == Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK) {
+			result.isSuccessful = true;
+			result.message = "The run event was successfully tracked";
 
-			// Break if the request was successful.
-			if (isRequestSuccessfull) {
-				break;
-			}
-
-			// Wait for a certain ammount of time otherwise.
-			yield return new WaitForSeconds(retryOffset);
-			retryOffset *= 2;
-		}
-
-		
+			_isTracked = true;
+		} else {
+			result.message = "An invalid response was recieved from the server";
+		}		
 	} catch (Poco::Exception& exception) {
-		result.isSuccessful = false;
-		result.errorMessage = exception.displayText();
+		result.message = exception.displayText();
 	}
 
 	return result;
