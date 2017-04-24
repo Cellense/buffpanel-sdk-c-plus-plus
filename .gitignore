@@ -12,3 +12,5 @@ ipch/*
 
 # Build generated files.
 Build/*
+Dist/*
+Reference/*
