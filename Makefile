@@ -8,7 +8,7 @@ MacOSXBuffPanelSDKDemoOBJ = Build/MacOSX/BuffPanelSDKDemo/*.o
 
 BuffPanelSDKDEPS = Include/*.h
 
-%: Dist/%/libBuffPanelSDK.so Dist/%/BuffPanelSDKDemo
+Linux: Dist/Linux/libBuffPanelSDK.so Dist/Linux/BuffPanelSDKDemo
 
 Dist/Linux/libBuffPanelSDK.so: Dist/Linux $(LinuxBuffPanelSDKOBJ)
 # Link the object files into the shared library.
