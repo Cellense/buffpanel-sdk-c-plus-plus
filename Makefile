@@ -10,19 +10,19 @@ BuffPanelSDKDEPS = Include/*.h
 
 Linux: Dist/Linux/libBuffPanelSDK.so Dist/Linux/BuffPanelSDKDemo
 
-Dist/Linux/libBuffPanelSDK.so: Dist/Linux $(LinuxBuffPanelSDKOBJ)
+Dist/Linux/libBuffPanelSDK.so: $(LinuxBuffPanelSDKOBJ) Dist/Linux
 # Link the object files into the shared library.
 	$(LinuxCOMPILER) -shared $^ -o $@
 
-Build/Linux/BuffPanelSDK/%.o: Build/Linux Source/BuffPanelSDK/%.cpp $(BuffPanelSDKDEPS)
+Build/Linux/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(BuffPanelSDKDEPS) Build/Linux/BuffPanelSDK
 # Build the object files from the source files.
 	$(LinuxCOMPILER) -c -fPIC $< -o $@
 
-Dist/Linux/BuffPanelSDKDemo: Dist/Linux $(LinuxBuffPanelSDKDemoOBJ)
+Dist/Linux/BuffPanelSDKDemo: $(LinuxBuffPanelSDKDemoOBJ) Dist/Linux
 # Link the object files into the executable.
 	LD_RUN_PATH='$$ORIGIN' $(LinuxCOMPILER) -L Dist/Linux/ $^ -lBuffPanelSDK -o $@
 
-Dist/Linux/BuffPanelSDKDemo/%.o: Build/Linux Source/BuffPanelSDKDemo/%.cpp $(BuffPanelSDKDEPS)
+Dist/Linux/BuffPanelSDKDemo/%.o: Source/BuffPanelSDKDemo/%.cpp $(BuffPanelSDKDEPS) Build/Linux/BuffPanelSDKDemo
 # Build the object files from the source files.
 	$(LinuxCOMPILER) -c Source/BuffPanelSDKDemo/*.cpp -o $@
 
@@ -34,7 +34,7 @@ Build/%:
 # Create the build directory.
 	mkdir -p $@
 
-clear:
+clean:
 # Clear the build and dist directories.
 	rm -rf Build
 	rm -rf Dist
