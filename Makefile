@@ -1,10 +1,10 @@
 LinuxCOMPILER = clang++ -std=c++11 -Wall
 MacOSXCOMPILER = clang++ -stdlib=libc++ -std=c++11 -Wall
 
-LinuxBuffPanelSDKOBJ = Build/Linux/BuffPanelSDK/*.o
-LinuxBuffPanelSDKDemoOBJ = Build/Linux/BuffPanelSDKDemo/*.o
-MacOSXBuffPanelSDKOBJ = Build/MacOSX/BuffPanelSDK/*.o
-MacOSXBuffPanelSDKDemoOBJ = Build/MacOSX/BuffPanelSDKDemo/*.o
+LinuxBuffPanelSDKOBJ = Build/Linux/BuffPanelSDK/Client.o
+LinuxBuffPanelSDKDemoOBJ = Build/Linux/BuffPanelSDKDemo/Main.o
+MacOSXBuffPanelSDKOBJ = Build/MacOSX/BuffPanelSDK/Client.o
+MacOSXBuffPanelSDKDemoOBJ = Build/MacOSX/BuffPanelSDKDemo/Main.o
 
 BuffPanelSDKDEPS = Include/*.h
 
