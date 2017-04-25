@@ -18,9 +18,18 @@
     <ClInclude Include="include\BuffPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Client.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Callback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\BuffPanelSDKCPlusPlus\BuffPanel.cpp">
+    <ClCompile Include="Source\BuffPanelSDK\Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

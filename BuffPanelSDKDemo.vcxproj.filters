@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\BuffPanelSDKCPlusPlusDemo\Main.cpp">
+    <ClCompile Include="Source\BuffPanelSDKDemo\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
