@@ -1,67 +1,65 @@
 LinuxCOMPILER = clang++ -std=c++11 -Wall
 MacOSXCOMPILER = clang++ -stdlib=libc++ -std=c++11 -Wall
 
-BuffPanelSDKCPlusPlusDEPS = Include/BuffPanel.h Source/BuffPanelSDKCPlusPlus/BuffPanel.cpp
-BuffPanelSDKCPlusPlusDemoDEPS = Include/BuffPanel.h Source/BuffPanelSDKCPlusPlusDemo/Main.cpp
+LinuxBuffPanelSDKOBJ = Build/Linux/BuffPanelSDK/*.o
+LinuxBuffPanelSDKDemoOBJ = Build/Linux/BuffPanelSDKDemo/*.o
+MacOSXBuffPanelSDKOBJ = Build/MacOSX/BuffPanelSDK/*.o
+MacOSXBuffPanelSDKDemoOBJ = Build/MacOSX/BuffPanelSDKDemo/*.o
 
-Linux: Linux/BuffPanelSDKCPlusPlus Linux/BuffPanelSDKCPlusPlusDemo
-# Create the dist directory.
-	rm -rf Dist/$@
-	mkdir -p Dist/$@
-# Copy the built files.
-	cp Build/$@/BuffPanelSDKCPlusPlus/libBuffPanelSDKCPlusPlus.so Dist/$@/
-	cp Build/$@/BuffPanelSDKCPlusPlusDemo/BuffPanelSDKCPlusPlusDemo Dist/$@/
+BuffPanelSDKDEPS = Include/*.h
 
-Linux/BuffPanelSDKCPlusPlus: $(BuffPanelSDKCPlusPlusDEPS)
-# Clear the build directory.
-	rm -rf Build/$@
-	mkdir -p Build/$@
-# Build the object files from the source files.
-	$(LinuxCOMPILER) -c -fPIC Source/BuffPanelSDKCPlusPlus/BuffPanel.cpp -o Build/$@/BuffPanel.o
+%: Dist/%/libBuffPanelSDK.so Dist/%/BuffPanelSDKDemo
+
+Dist/Linux/libBuffPanelSDK.so: Dist/Linux $(LinuxBuffPanelSDKOBJ)
 # Link the object files into the shared library.
-	$(LinuxCOMPILER) -shared Build/$@/BuffPanel.o -o Build/$@/libBuffPanelSDKCPlusPlus.so
+	$(LinuxCOMPILER) -shared $^ -o $@
 
-Linux/BuffPanelSDKCPlusPlusDemo: $(BuffPanelSDKCPlusPlusDemoDEPS)
-# Clear the build directory.
-	rm -rf Build/$@
-	mkdir -p Build/$@
+Build/Linux/BuffPanelSDK/%.o: Build/Linux Source/BuffPanelSDK/%.cpp $(BuffPanelSDKDEPS)
 # Build the object files from the source files.
-	$(LinuxCOMPILER) -c Source/BuffPanelSDKCPlusPlusDemo/Main.cpp -o Build/$@/Main.o
-# Link the object files into the executable.
-	LD_RUN_PATH='$$ORIGIN' $(LinuxCOMPILER) -L Build/Linux/BuffPanelSDKCPlusPlus Build/$@/Main.o -lBuffPanelSDKCPlusPlus -o Build/$@/BuffPanelSDKCPlusPlusDemo
+	$(LinuxCOMPILER) -c -fPIC $< -o $@
 
-MacOSX: MacOSX/BuffPanelSDKCPlusPlus MacOSX/BuffPanelSDKCPlusPlusDemo
+Dist/Linux/BuffPanelSDKDemo: Dist/Linux $(LinuxBuffPanelSDKDemoOBJ)
+# Link the object files into the executable.
+	LD_RUN_PATH='$$ORIGIN' $(LinuxCOMPILER) -L Dist/Linux/ $^ -lBuffPanelSDK -o $@
+
+Dist/Linux/BuffPanelSDKDemo/%.o: Build/Linux Source/BuffPanelSDKDemo/%.cpp $(BuffPanelSDKDEPS)
+# Build the object files from the source files.
+	$(LinuxCOMPILER) -c Source/BuffPanelSDKDemo/*.cpp -o $@
+
+Dist/%:
 # Create the dist directory.
-	rm -rf Dist/$@
-	mkdir -p Dist/$@
-# Copy the built files.
-	cp Build/$@/BuffPanelSDKCPlusPlus/libBuffPanelSDKCPlusPlus.dylib Dist/$@/
-	cp Build/$@/BuffPanelSDKCPlusPlusDemo/BuffPanelSDKCPlusPlusDemo Dist/$@/
+	mkdir -p $@
 
-MacOSX/BuffPanelSDKCPlusPlus: $(BuffPanelSDKCPlusPlusDEPS)
-# Clear the build directory.
-	rm -rf Build/$@
-	mkdir -p Build/$@
-# Build the object files from the source files.
-	$(MacOSXCOMPILER) -c Source/BuffPanelSDKCPlusPlus/BuffPanel.cpp -o Build/$@/BuffPanel.o
-# Link the object files into the dynamic library.
-	$(MacOSXCOMPILER) -dynamiclib -install_name "@loader_path/libBuffPanelSDKCPlusPlus.dylib" Build/$@/BuffPanel.o -o Build/$@/libBuffPanelSDKCPlusPlus.dylib
+Build/%:
+# Create the build directory.
+	mkdir -p $@
 
-MacOSX/BuffPanelSDKCPlusPlusDemo: $(BuffPanelSDKCPlusPlusDemoDEPS)
-# Clear the build directory.
-	rm -rf Build/$@
-	mkdir -p Build/$@
-# Build the object files from the source files.
-	$(MacOSXCOMPILER) -c Source/BuffPanelSDKCPlusPlusDemo/Main.cpp -o Build/$@/Main.o
-# Link the object files into the executable.
-	$(MacOSXCOMPILER) -L Build/MacOSX/BuffPanelSDKCPlusPlus Build/$@/Main.o -lBuffPanelSDKCPlusPlus -o Build/$@/BuffPanelSDKCPlusPlusDemo
-
-Clean: CleanBuild CleanDist
-
-CleanBuild:
+clear:
+# Clear the build and dist directories.
 	rm -rf Build
-	mkdir -p Build
-
-CleanDist:
 	rm -rf Dist
-	mkdir -p Dist
+
+Linux/BuffPanelSDKDemo: $(BuffPanelSDKDemoDEPS)
+# Clear the build directory.
+	rm -rf Build/$@
+	mkdir -p Build/$@
+
+
+
+MacOSX/BuffPanelSDK: $(BuffPanelSDKDEPS)
+# Clear the build directory.
+	rm -rf Build/$@
+	mkdir -p Build/$@
+# Build the object files from the source files.
+	$(MacOSXCOMPILER) -c Source/BuffPanelSDK/BuffPanel.cpp -o Build/$@/BuffPanel.o
+# Link the object files into the dynamic library.
+	$(MacOSXCOMPILER) -dynamiclib -install_name "@loader_path/libBuffPanelSDK.dylib" Build/$@/BuffPanel.o -o Build/$@/libBuffPanelSDK.dylib
+
+MacOSX/BuffPanelSDKDemo: $(BuffPanelSDKDemoDEPS)
+# Clear the build directory.
+	rm -rf Build/$@
+	mkdir -p Build/$@
+# Build the object files from the source files.
+	$(MacOSXCOMPILER) -c Source/BuffPanelSDKDemo/Main.cpp -o Build/$@/Main.o
+# Link the object files into the executable.
+	$(MacOSXCOMPILER) -L Build/MacOSX/BuffPanelSDK Build/$@/Main.o -lBuffPanelSDK -o Build/$@/BuffPanelSDKDemo
