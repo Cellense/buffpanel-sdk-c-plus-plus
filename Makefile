@@ -7,7 +7,7 @@ DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 libBuffPanelSDK = $(if $(IsMacOsX),libBuffPanelSDK.dylib,libBuffPanelSDK.so)
 _libBuffPanelSDKLFLAGSRELEASE = -lPocoUtil -lPocoJSON -lPocoNet -lPocoXML -lPocoFoundation
 _libBuffPanelSDKLFLAGSDEBUG = -lPocoUtild -lPocoJSONd -lPocoNetd -lPocoXMLd -lPocoFoundationd
-libBuffPanelSDKLFLAGS = -LReference/Library $(if $(DEBUG),$(_libBuffPanelSDKLFLAGSDEBUG),$(_libBuffPanelSDKLFLAGSRELEASE)) -lpthread
+libBuffPanelSDKLFLAGS = -LReference/Library $(if $(DEBUG),$(_libBuffPanelSDKLFLAGSDEBUG),$(_libBuffPanelSDKLFLAGSRELEASE)) -lpthread$(if $(LEGACY), -lrt)
 
 _BuffPanelSDKDemoOBJ = Main.o
 BuffPanelSDKDemoOBJ = $(patsubst %,Build/BuffPanelSDKDemo/%,$(_BuffPanelSDKDemoOBJ))
