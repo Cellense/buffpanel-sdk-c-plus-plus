@@ -4,15 +4,15 @@ IsMacOsX = $(filter Darwin,$(shell uname -s))
 _DEPS = Api.h BuffPanel.h Callback.h Client.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-libBuffPanelSDK = $(if $(IsMacOsX),libBuffPanelSDK.dylib,libBuffPanelSDK.so)
-_libBuffPanelSDKLFLAGSRELEASE = -lPocoUtil -lPocoJSON -lPocoNet -lPocoXML -lPocoFoundation
-_libBuffPanelSDKLFLAGSDEBUG = -lPocoUtild -lPocoJSONd -lPocoNetd -lPocoXMLd -lPocoFoundationd
-libBuffPanelSDKLFLAGS = -LReference/Library $(if $(DEBUG),$(_libBuffPanelSDKLFLAGSDEBUG),$(_libBuffPanelSDKLFLAGSRELEASE)) -lpthread$(if $(LEGACY), -lrt)
+libBuffPanelSdk = $(if $(IsMacOsX),libBuffPanelSdk.dylib,libBuffPanelSdk.so)
+_libBuffPanelSdkLFLAGSRELEASE = -lPocoUtil -lPocoJSON -lPocoNet -lPocoXML -lPocoFoundation
+_libBuffPanelSdkLFLAGSDEBUG = -lPocoUtild -lPocoJSONd -lPocoNetd -lPocoXMLd -lPocoFoundationd
+libBuffPanelSdkLFLAGS = -LReference/Library $(if $(DEBUG),$(_libBuffPanelSdkLFLAGSDEBUG),$(_libBuffPanelSdkLFLAGSRELEASE)) -lpthread$(if $(LEGACY), -lrt)
 
-_BuffPanelSDKDemoOBJ = Main.o
-BuffPanelSDKDemoOBJ = $(patsubst %,Build/BuffPanelSDKDemo/%,$(_BuffPanelSDKDemoOBJ))
-_BuffPanelSDKOBJ = Client.o
-BuffPanelSDKOBJ = $(patsubst %,Build/BuffPanelSDK/%,$(_BuffPanelSDKOBJ))
+_BuffPanelSdkDemoOBJ = Main.o
+BuffPanelSdkDemoOBJ = $(patsubst %,Build/BuffPanelSdkDemo/%,$(_BuffPanelSdkDemoOBJ))
+_BuffPanelSdkOBJ = Client.o
+BuffPanelSdkOBJ = $(patsubst %,Build/BuffPanelSdk/%,$(_BuffPanelSdkOBJ))
 
 IDIR = Include
 
@@ -21,34 +21,34 @@ CXXFLAGS = -Wall $(if $(DEBUG),-g -DDEBUG,-g0)
 CXXCFLAGS = -I$(IDIR)
 CXXLFLAGS = -static-libgcc$(if $(LEGACY),, -static-libstdc++)
 
-all: Dist/BuffPanelSDKDemo
+all: Dist/BuffPanelSdkDemo
 
-Dist/BuffPanelSDKDemo: Dist Dist/$(libBuffPanelSDK) $(BuffPanelSDKDemoOBJ)
+Dist/BuffPanelSdkDemo: Dist Dist/$(libBuffPanelSdk) $(BuffPanelSdkDemoOBJ)
 # Link the object files into the executable.
-	$(if $(IsLinux),LD_RUN_PATH='$$ORIGIN',) $(CXX) $(CXXLFLAGS) $(CXXFLAGS) $(BuffPanelSDKDemoOBJ) -L$< -lBuffPanelSDK -o $@
+	$(if $(IsLinux),LD_RUN_PATH='$$ORIGIN',) $(CXX) $(CXXLFLAGS) $(CXXFLAGS) $(BuffPanelSdkDemoOBJ) -L$< -lBuffPanelSdk -o $@
 
-Build/BuffPanelSDKDemo/%.o: Source/BuffPanelSDKDemo/%.cpp $(DEPS) Build/BuffPanelSDKDemo
+Build/BuffPanelSdkDemo/%.o: Source/BuffPanelSdkDemo/%.cpp $(DEPS) Build/BuffPanelSdkDemo
 # Build the object files from the source files.
 	$(CXX) $(CXXCFLAGS) $(CXXFLAGS) -c $< -o $@
 
-Dist/libBuffPanelSDK.so: $(BuffPanelSDKOBJ)
+Dist/libBuffPanelSdk.so: $(BuffPanelSdkOBJ)
 # Link the object files into the shared library.
-	$(CXX) $(CXXLFLAGS) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -shared -o $@
+	$(CXX) $(CXXLFLAGS) $(CXXFLAGS) $^ $(libBuffPanelSdkLFLAGS) -shared -o $@
 
-Dist/libBuffPanelSDK.dylib: $(BuffPanelSDKOBJ)
-	$(CXX) $(CXXLFLAGS) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -dynamiclib -install_name "@loader_path/libBuffPanelSDK.dylib" -o $@
+Dist/libBuffPanelSdk.dylib: $(BuffPanelSdkOBJ)
+	$(CXX) $(CXXLFLAGS) $(CXXFLAGS) $^ $(libBuffPanelSdkLFLAGS) -dynamiclib -install_name "@loader_path/libBuffPanelSdk.dylib" -o $@
 
-Build/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(DEPS) Build/BuffPanelSDK
+Build/BuffPanelSdk/%.o: Source/BuffPanelSdk/%.cpp $(DEPS) Build/BuffPanelSdk
 # Build the object files from the source files.
 	$(CXX) $(CXXCFLAGS) $(CXXFLAGS) -c -IReference/Include -fPIC $< -o $@
 
-Build/BuffPanelSDKDemo:
+Build/BuffPanelSdkDemo:
 # Create the build directory.
-	mkdir -p Build/BuffPanelSDKDemo
+	mkdir -p Build/BuffPanelSdkDemo
 
-Build/BuffPanelSDK:
+Build/BuffPanelSdk:
 # Create the build directory.
-	mkdir -p Build/BuffPanelSDK
+	mkdir -p Build/BuffPanelSdk
 
 Dist:
 # Create the dist directory.

@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1D540692-F4B3-4D2B-A78B-7D2E3196E191}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>BuffPanelSDK</RootNamespace>
+    <RootNamespace>BuffPanelSdk</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -112,7 +112,7 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)BuffPanelSDK.dll" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSDK.lib" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
+      <Command>xcopy "$(OutDir)BuffPanelSdk.dll" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSdk.lib" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,7 +130,7 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)BuffPanelSDK.dll" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSDK.lib" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
+      <Command>xcopy "$(OutDir)BuffPanelSdk.dll" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSdk.lib" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -153,7 +153,7 @@
       <FullProgramDatabaseFile>false</FullProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)BuffPanelSDK.dll" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSDK.lib" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
+      <Command>xcopy "$(OutDir)BuffPanelSdk.dll" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSdk.lib" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -176,7 +176,7 @@
       <FullProgramDatabaseFile>false</FullProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)BuffPanelSDK.dll" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSDK.lib" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
+      <Command>xcopy "$(OutDir)BuffPanelSdk.dll" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y &amp;&amp; xcopy "$(OutDir)BuffPanelSdk.lib" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -186,7 +186,7 @@
     <ClInclude Include="Include\Client.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\BuffPanelSDK\Client.cpp" />
+    <ClCompile Include="Source\BuffPanelSdk\Client.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
