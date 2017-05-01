@@ -19,7 +19,7 @@ IDIR = Include
 CXX = $(if $(LEGACY),g++ -std=c++0x,clang++ -std=c++11)$(if $(IsMacOsX), -stdlib=libc++,)
 CXXFLAGS = -Wall $(if $(DEBUG),-g -DDEBUG,-g0)
 CXXCFLAGS = -I$(IDIR)
-CXXLFLAGS = -static-libgcc$(if $(LEGACY),, -static-libstdc++)
+CXXLFLAGS = $(if $(IsLinux),-static-libgcc,) $(if $(LEGACY),,-static-libstdc++)
 
 all: Dist/BuffPanelSdkDemo
 
