@@ -5,9 +5,9 @@ _DEPS = Api.h BuffPanel.h Callback.h Client.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 libBuffPanelSDK = $(if $(IsMacOsX),libBuffPanelSDK.dylib,libBuffPanelSDK.so)
-_libBuffPanelSDKLFLAGSRELEASE = -LReference/Library -lPocoUtil -lPocoJSON -lPocoNet -lPocoXML -lPocoFoundation -lpthread
-_libBuffPanelSDKLFLAGSDEBUG = -LReference/Library -lPocoUtild -lPocoJSONd -lPocoNetd -lPocoXMLd -lPocoFoundationd -lpthread
-libBuffPanelSDKLFLAGS = $(if $(DEBUG),$(_libBuffPanelSDKLFLAGSDEBUG),$(_libBuffPanelSDKLFLAGSRELEASE))
+_libBuffPanelSDKLFLAGSRELEASE = -lPocoUtil -lPocoJSON -lPocoNet -lPocoXML -lPocoFoundation
+_libBuffPanelSDKLFLAGSDEBUG = -lPocoUtild -lPocoJSONd -lPocoNetd -lPocoXMLd -lPocoFoundationd
+libBuffPanelSDKLFLAGS = -LReference/Library $(if $(DEBUG),$(_libBuffPanelSDKLFLAGSDEBUG),$(_libBuffPanelSDKLFLAGSRELEASE)) -lpthread
 
 _BuffPanelSDKDemoOBJ = Main.o
 BuffPanelSDKDemoOBJ = $(patsubst %,Build/BuffPanelSDKDemo/%,$(_BuffPanelSDKDemoOBJ))
@@ -17,32 +17,38 @@ BuffPanelSDKOBJ = $(patsubst %,Build/BuffPanelSDK/%,$(_BuffPanelSDKOBJ))
 IDIR = Include
 
 CXX = clang++
-CXXFLAGS = -std=c++11$(if $(IsMacOsX), -stdlib=libc++,) -Wall -I$(IDIR) $(if $(DEBUG),-g -DDEBUG,-g0)
+CXXFLAGS = -std=c++11$(if $(IsMacOsX), -stdlib=libc++,) -Wall $(if $(DEBUG),-g -DDEBUG,-g0)
+CXXCFLAGS = -I$(IDIR)
+CXXLFLAGS = -static-libgcc -static-libstdc++
 
 all: Dist/BuffPanelSDKDemo
 
 Dist/BuffPanelSDKDemo: Dist Dist/$(libBuffPanelSDK) $(BuffPanelSDKDemoOBJ)
 # Link the object files into the executable.
-	$(if $(IsLinux),LD_RUN_PATH='$$ORIGIN',) $(CXX) $(CXXFLAGS) $(BuffPanelSDKDemoOBJ) -L$< -lBuffPanelSDK -o $@
+	$(if $(IsLinux),LD_RUN_PATH='$$ORIGIN',) $(CXX) $(CXXLFLAGS) $(CXXFLAGS) $(BuffPanelSDKDemoOBJ) -L$< -lBuffPanelSDK -o $@
 
 Build/BuffPanelSDKDemo/%.o: Source/BuffPanelSDKDemo/%.cpp $(DEPS)
 # Create the build directory.
 	mkdir -p Build/BuffPanelSDKDemo
 # Build the object files from the source files.
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXCFLAGS) $(CXXFLAGS) -c $< -o $@
 
 Dist/libBuffPanelSDK.so: $(BuffPanelSDKOBJ)
 # Link the object files into the shared library.
-	$(CXX) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -shared -o $@
+	$(CXX) $(CXXLFLAGS) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -shared -o $@
 
 Dist/libBuffPanelSDK.dylib: $(BuffPanelSDKOBJ)
-	$(CXX) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -dynamiclib -install_name "@loader_path/libBuffPanelSDK.dylib" -o $@
+	$(CXX) $(CXXLFLAGS) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -dynamiclib -install_name "@loader_path/libBuffPanelSDK.dylib" -o $@
 
-Build/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(DEPS)
+Build/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(DEPS) Build
+# Build the object files from the source files.
+	$(CXX) $(CXXCFLAGS) $(CXXFLAGS) -c -IReference/Include -fPIC $< -o $@
+
+Build:
 # Create the build directory.
 	mkdir -p Build/BuffPanelSDK
-# Build the object files from the source files.
-	$(CXX) $(CXXFLAGS) -c -IReference/Include -fPIC $< -o $@
+# Copy links to libraries
+	ln -s `g++ -print-file-name=libstdc++.a` Build
 
 Dist:
 # Create the dist directory.
