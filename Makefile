@@ -1,70 +1,54 @@
-LinuxCOMPILER = clang++ -std=c++11 -Wall
-MacOSXCOMPILER = clang++ -stdlib=libc++ -std=c++11 -Wall
+IsLinux = $(filter Linux,$(shell uname -s))
+IsMacOsX = $(filter Darwin,$(shell uname -s))
+
+_DEPS = Api.h BuffPanel.h Callback.h Client.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+libBuffPanelSDK = $(if $(IsMacOsX),libBuffPanelSDK.dylib,libBuffPanelSDK.so)
+_libBuffPanelSDKLFLAGSRELEASE = -LReference/Library -lPocoUtil -lPocoJSON -lPocoNet -lPocoXML -lPocoFoundation -lpthread
+_libBuffPanelSDKLFLAGSDEBUG = -LReference/Library -lPocoUtild -lPocoJSONd -lPocoNetd -lPocoXMLd -lPocoFoundationd -lpthread
+libBuffPanelSDKLFLAGS = $(if $(DEBUG),$(_libBuffPanelSDKLFLAGSDEBUG),$(_libBuffPanelSDKLFLAGSRELEASE))
+
+_BuffPanelSDKDemoOBJ = Main.o
+BuffPanelSDKDemoOBJ = $(patsubst %,Build/BuffPanelSDKDemo/%,$(_BuffPanelSDKDemoOBJ))
+_BuffPanelSDKOBJ = Client.o
+BuffPanelSDKOBJ = $(patsubst %,Build/BuffPanelSDK/%,$(_BuffPanelSDKOBJ))
 
 IDIR = Include
-BuffPanelSDKIDIR = 
 
-CFLAGS = -I$(IDIR)
+CXX = clang++
+CXXFLAGS = -std=c++11$(if $(IsMacOsX), -stdlib=libc++,) -Wall -I$(IDIR) $(if $(DEBUG),-g -DDEBUG,-g0)
 
-LinuxBuffPanelSDKOBJ = Build/Linux/BuffPanelSDK/Client.o
-LinuxBuffPanelSDKDemoOBJ = Build/Linux/BuffPanelSDKDemo/Main.o
-MacOSXBuffPanelSDKOBJ = Build/MacOSX/BuffPanelSDK/Client.o
-MacOSXBuffPanelSDKDemoOBJ = Build/MacOSX/BuffPanelSDKDemo/Main.o
+all: Dist/BuffPanelSDKDemo
 
-BuffPanelSDKDEPS = $(IDIR)/*.h
-
-Linux: Dist/Linux/libBuffPanelSDK.so Dist/Linux/BuffPanelSDKDemo
-
-Dist/Linux/libBuffPanelSDK.so: $(LinuxBuffPanelSDKOBJ) Dist/Linux
-# Link the object files into the shared library.
-	$(LinuxCOMPILER) -shared $^ -o $@
-
-Build/Linux/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(BuffPanelSDKDEPS) Build/Linux/BuffPanelSDK
-# Build the object files from the source files.
-	$(LinuxCOMPILER) -c -fPIC $< -o $@
-
-Dist/Linux/BuffPanelSDKDemo: $(LinuxBuffPanelSDKDemoOBJ) Dist/Linux
+Dist/BuffPanelSDKDemo: Dist Dist/$(libBuffPanelSDK) $(BuffPanelSDKDemoOBJ)
 # Link the object files into the executable.
-	LD_RUN_PATH='$$ORIGIN' $(LinuxCOMPILER) -L Dist/Linux/ $^ -lBuffPanelSDK -o $@
+	$(if $(IsLinux),LD_RUN_PATH='$$ORIGIN',) $(CXX) $(CXXFLAGS) $(BuffPanelSDKDemoOBJ) -L$< -lBuffPanelSDK -o $@
 
-Dist/Linux/BuffPanelSDKDemo/%.o: Source/BuffPanelSDKDemo/%.cpp $(BuffPanelSDKDEPS) Build/Linux/BuffPanelSDKDemo
-# Build the object files from the source files.
-	$(LinuxCOMPILER) -c Source/BuffPanelSDKDemo/*.cpp -o $@
-
-Dist/%:
-# Create the dist directory.
-	mkdir -p $@
-
-Build/%:
+Build/BuffPanelSDKDemo/%.o: Source/BuffPanelSDKDemo/%.cpp $(DEPS)
 # Create the build directory.
+	mkdir -p Build/BuffPanelSDKDemo
+# Build the object files from the source files.
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+Dist/libBuffPanelSDK.so: $(BuffPanelSDKOBJ)
+# Link the object files into the shared library.
+	$(CXX) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -shared -o $@
+
+Dist/libBuffPanelSDK.dylib: $(BuffPanelSDKOBJ)
+	$(CXX) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -dynamiclib -install_name "@loader_path/libBuffPanelSDK.dylib" -o $@
+
+Build/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(DEPS)
+# Create the build directory.
+	mkdir -p Build/BuffPanelSDK
+# Build the object files from the source files.
+	$(CXX) $(CXXFLAGS) -c -IReference/Include -fPIC $< -o $@
+
+Dist:
+# Create the dist directory.
 	mkdir -p $@
 
 clean:
 # Clear the build and dist directories.
 	rm -rf Build
 	rm -rf Dist
-
-Linux/BuffPanelSDKDemo: $(BuffPanelSDKDemoDEPS)
-# Clear the build directory.
-	rm -rf Build/$@
-	mkdir -p Build/$@
-
-
-
-MacOSX/BuffPanelSDK: $(BuffPanelSDKDEPS)
-# Clear the build directory.
-	rm -rf Build/$@
-	mkdir -p Build/$@
-# Build the object files from the source files.
-	$(MacOSXCOMPILER) -c Source/BuffPanelSDK/BuffPanel.cpp -o Build/$@/BuffPanel.o
-# Link the object files into the dynamic library.
-	$(MacOSXCOMPILER) -dynamiclib -install_name "@loader_path/libBuffPanelSDK.dylib" Build/$@/BuffPanel.o -o Build/$@/libBuffPanelSDK.dylib
-
-MacOSX/BuffPanelSDKDemo: $(BuffPanelSDKDemoDEPS)
-# Clear the build directory.
-	rm -rf Build/$@
-	mkdir -p Build/$@
-# Build the object files from the source files.
-	$(MacOSXCOMPILER) -c Source/BuffPanelSDKDemo/Main.cpp -o Build/$@/Main.o
-# Link the object files into the executable.
-	$(MacOSXCOMPILER) -L Build/MacOSX/BuffPanelSDK Build/$@/Main.o -lBuffPanelSDK -o Build/$@/BuffPanelSDKDemo
