@@ -47,8 +47,6 @@ Build/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(DEPS) Build
 Build:
 # Create the build directory.
 	mkdir -p Build/BuffPanelSDK
-# Copy links to libraries
-	ln -s `g++ -print-file-name=libstdc++.a` Build
 
 Dist:
 # Create the dist directory.
