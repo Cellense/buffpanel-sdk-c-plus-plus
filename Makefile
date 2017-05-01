@@ -16,10 +16,10 @@ BuffPanelSDKOBJ = $(patsubst %,Build/BuffPanelSDK/%,$(_BuffPanelSDKOBJ))
 
 IDIR = Include
 
-CXX = clang++
-CXXFLAGS = -std=c++11$(if $(IsMacOsX), -stdlib=libc++,) -Wall $(if $(DEBUG),-g -DDEBUG,-g0)
+CXX = $(if $(LEGACY),g++ -std=c++0x,clang++ -std=c++11)$(if $(IsMacOsX), -stdlib=libc++,)
+CXXFLAGS = -Wall $(if $(DEBUG),-g -DDEBUG,-g0)
 CXXCFLAGS = -I$(IDIR)
-CXXLFLAGS = -static-libgcc -static-libstdc++
+CXXLFLAGS = -static-libgcc$(if $(LEGACY),, -static-libstdc++)
 
 all: Dist/BuffPanelSDKDemo
 
@@ -27,9 +27,7 @@ Dist/BuffPanelSDKDemo: Dist Dist/$(libBuffPanelSDK) $(BuffPanelSDKDemoOBJ)
 # Link the object files into the executable.
 	$(if $(IsLinux),LD_RUN_PATH='$$ORIGIN',) $(CXX) $(CXXLFLAGS) $(CXXFLAGS) $(BuffPanelSDKDemoOBJ) -L$< -lBuffPanelSDK -o $@
 
-Build/BuffPanelSDKDemo/%.o: Source/BuffPanelSDKDemo/%.cpp $(DEPS)
-# Create the build directory.
-	mkdir -p Build/BuffPanelSDKDemo
+Build/BuffPanelSDKDemo/%.o: Source/BuffPanelSDKDemo/%.cpp $(DEPS) Build/BuffPanelSDKDemo
 # Build the object files from the source files.
 	$(CXX) $(CXXCFLAGS) $(CXXFLAGS) -c $< -o $@
 
@@ -40,11 +38,15 @@ Dist/libBuffPanelSDK.so: $(BuffPanelSDKOBJ)
 Dist/libBuffPanelSDK.dylib: $(BuffPanelSDKOBJ)
 	$(CXX) $(CXXLFLAGS) $(CXXFLAGS) $^ $(libBuffPanelSDKLFLAGS) -dynamiclib -install_name "@loader_path/libBuffPanelSDK.dylib" -o $@
 
-Build/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(DEPS) Build
+Build/BuffPanelSDK/%.o: Source/BuffPanelSDK/%.cpp $(DEPS) Build/BuffPanelSDK
 # Build the object files from the source files.
 	$(CXX) $(CXXCFLAGS) $(CXXFLAGS) -c -IReference/Include -fPIC $< -o $@
 
-Build:
+Build/BuffPanelSDKDemo:
+# Create the build directory.
+	mkdir -p Build/BuffPanelSDKDemo
+
+Build/BuffPanelSDK:
 # Create the build directory.
 	mkdir -p Build/BuffPanelSDK
 
