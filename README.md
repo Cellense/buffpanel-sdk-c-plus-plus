@@ -178,6 +178,3 @@ We plan to add these features in future releases:
 - repeated sends in case of service unavailability
 - encapsulated thread management (no need to explicitly spawn threads)
 - storing messages in case the user's device is offline, etc.
-
-Where:
-- so you can use the value stellaris_test.
