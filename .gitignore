@@ -4,6 +4,7 @@ Thumbs.db
 
 # IDEs configuration files.
 .vs/*
+.vscode/*
 
 # Intellisense generated files.
 ipch/*
