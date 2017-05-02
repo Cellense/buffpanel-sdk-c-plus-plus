@@ -29,7 +29,7 @@ and used in your porject.
 
 There are three ways you can include the SDK into your game:
 1. Include the header files provided within the `Include` directory and one of the
-[prebuilt binaries](https://build.buffpanel.com/sdk/), which suits your target platform and configuration.
+[prebuilt binaries](https://cellense.com/sdk/), which suits your target platform and configuration.
 2. Include the header files provided within the `Include` directory and build the required binaries (its enough to
 build the `BuffPanelSdk` project). Bellow is a section detailing the specific build instructions for each of the
 supported platforms.
