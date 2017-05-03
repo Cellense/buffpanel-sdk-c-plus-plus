@@ -28,6 +28,11 @@ void BuffPanel::Client::track(
 	const std::map<std::string, std::string>& attributes,
 	const Callback& callback
 ) {
+	// Create local copies of the passed parameters.
+	const std::string _gameToken(gameToken);
+	const std::string _playerToken(playerToken);
+	const std::map<std::string, std::string> _attributes(attributes);
+
 	try {
 		// Parse the endpoint URI.
 		Poco::URI uri(_endpointUrl);
@@ -38,14 +43,14 @@ void BuffPanel::Client::track(
 
 		// Extract the attributes parameter into the JSON.
 		Poco::JSON::Object::Ptr jsonAttributes(new Poco::JSON::Object());
-		for (auto it(attributes.cbegin()); it != attributes.cend(); ++it) {
+		for (auto it(_attributes.cbegin()); it != _attributes.cend(); ++it) {
 			jsonAttributes->set(it->first, it->second);
 		}
 
 		// Initialize the JSON payload.
 		Poco::JSON::Object jsonPayload;
-		jsonPayload.set("game_token", gameToken);
-		jsonPayload.set("player_token", playerToken);
+		jsonPayload.set("game_token", _gameToken);
+		jsonPayload.set("player_token", _playerToken);
 		jsonPayload.set("is_repeated", isRepeated);
 		jsonPayload.set("attributes", jsonAttributes);
 		jsonPayload.set("version", _version);
