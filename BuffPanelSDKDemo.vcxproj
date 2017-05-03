@@ -78,7 +78,6 @@
     <OutDir>$(SolutionDir)Build\$(Platform)$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>Build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <ExecutablePath>D:\Projects\Cellense\BuffPanelSdkCPlusPlus\Build\Win32Debug\BuffPanelSdk\;$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -86,19 +85,16 @@
     <IntDir>Build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
     <ReferencePath>$(SolutionDir)bin\$(VC_ReferencesPath_x86);</ReferencePath>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <ExecutablePath>$(SolutionDir)Build\$(Platform)$(Configuration)\BuffPanelSdk\;$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Build\$(Platform)$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>Build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <ExecutablePath>$(SolutionDir)Dist\Windows64bit\;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Build\$(Platform)$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>Build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <ExecutablePath>$(SolutionDir)Dist\Windows64bit\;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,7 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Build\$(Platform)$(Configuration)\BuffPanelSdk\BuffPanelSdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Dist\$(Platform)$(Configuration)\BuffPanelSdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)BuffPanelSdkDemo.exe" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
@@ -130,7 +126,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Build\$(Platform)$(Configuration)\BuffPanelSdk\BuffPanelSdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Dist\$(Platform)$(Configuration)\BuffPanelSdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)BuffPanelSdkDemo.exe" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
@@ -152,7 +148,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Build\$(Platform)$(Configuration)\BuffPanelSdk\BuffPanelSdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Dist\$(Platform)$(Configuration)\BuffPanelSdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)BuffPanelSdkDemo.exe" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
@@ -174,7 +170,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Build\$(Platform)$(Configuration)\BuffPanelSdk\BuffPanelSdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Dist\$(Platform)$(Configuration)\BuffPanelSdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)BuffPanelSdkDemo.exe" "$(SolutionDir)Dist\$(Platform)$(Configuration)\" /Y</Command>
