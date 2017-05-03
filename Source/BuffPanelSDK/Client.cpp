@@ -1,5 +1,8 @@
-// Include module header.
-#include "../../Include/Client.h"
+// Include the module header.
+#include <BuffPanel/Client.h>
+
+// Include internal headers.
+#include <BuffPanel/Version.h>
 
 // Include poco headers.
 #include <Poco/Exception.h>
@@ -19,7 +22,7 @@
 
 // Define static constants.
 const std::string BuffPanel::Client::_endpointUrl("http://buffpanel.com/api/run");
-const std::string BuffPanel::Client::_version("0.1.0");
+const std::string BuffPanel::Client::_version(BUFFPANEL_SDK_VERSION);
 
 void BuffPanel::Client::track(
 	const std::string& gameToken,
