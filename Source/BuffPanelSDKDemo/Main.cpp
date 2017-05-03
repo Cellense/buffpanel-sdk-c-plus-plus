@@ -1,5 +1,5 @@
 // Include the sdk header.
-#include "../../Include/BuffPanel.h"
+#include <BuffPanel/BuffPanel.h>
 
 // Include the standard headers.
 #include <iostream>

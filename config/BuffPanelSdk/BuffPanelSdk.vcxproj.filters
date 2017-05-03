@@ -15,21 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\BuffPanel.h">
+    <ClInclude Include="..\..\Include\BuffPanel\Api.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Client.h">
+    <ClInclude Include="..\..\Include\BuffPanel\BuffPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Api.h">
+    <ClInclude Include="..\..\Include\BuffPanel\Callback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Callback.h">
+    <ClInclude Include="..\..\Include\BuffPanel\Client.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\BuffPanel\Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\BuffPanelSDK\Client.cpp">
+    <ClCompile Include="..\..\Source\BuffPanelSdk\Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
