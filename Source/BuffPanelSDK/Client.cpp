@@ -18,8 +18,8 @@
 #include <string>
 
 // Define static constants.
-const std::string BuffPanel::Client::_endpointUrl = "http://buffpanel.com/api/run";
-const std::string BuffPanel::Client::_version = "0.1.0";
+const std::string BuffPanel::Client::_endpointUrl("http://buffpanel.com/api/run");
+const std::string BuffPanel::Client::_version("0.1.0");
 
 void BuffPanel::Client::track(
 	const std::string& gameToken,
