@@ -15,3 +15,7 @@ ipch/*
 Build/*
 Dist/*
 Reference/*
+node_modules/*
+
+# Configuration files.
+.env

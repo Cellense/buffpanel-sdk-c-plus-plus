@@ -1,0 +1,23 @@
+{
+  "name": "buffpanel-sdk-c-plus-plus",
+  "version": "0.1.0",
+  "description": "The BuffPanel SDK is a library that is meant to be integrated into your game. It provides a simple interface allowing you to send tracking data to the BuffPanel service.",
+  "scripts": {
+    "publish": "node Source/publish.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cellense/buffpanel-sdk-c-plus-plus.git"
+  },
+  "author": "Osama Hassanein",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cellense/buffpanel-sdk-c-plus-plus/issues"
+  },
+  "homepage": "https://github.com/Cellense/buffpanel-sdk-c-plus-plus#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "dotenv": "^4.0.0",
+    "ssh2-sftp-client": "^1.0.5"
+  }
+}
