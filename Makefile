@@ -1,3 +1,26 @@
+OS_NAME = $(shell uname -s)
+ifeq ($(OS_NAME),Linux)
+
+CC = g++
+CXX = g++
+CXXFLAGS = -Wall
+LDLIBS = 
+
+else
+ifeq ($(OS_NAME),Darwin)
+
+CC = clang++
+CXX = clang++
+CXXFLAGS = -Wall
+LDLIBS = 
+
+else
+
+endif
+endif
+
+
+
 IsLinux = $(filter Linux,$(shell uname -s))
 IsMacOsX = $(filter Darwin,$(shell uname -s))
 
