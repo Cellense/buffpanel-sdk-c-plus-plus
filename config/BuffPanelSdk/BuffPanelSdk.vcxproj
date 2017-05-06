@@ -5,13 +5,13 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
@@ -31,17 +31,17 @@
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -73,15 +73,15 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)dist\$(Platform)$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Include\;$(SolutionDir)Reference\Include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(SolutionDir)Reference\Library\$(Platform)$(Configuration)\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)include\;$(SolutionDir)Reference\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)reference\library\$(Platform)$(Configuration)\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)dist\$(Platform)$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Include\;$(SolutionDir)Reference\Include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)include\;$(SolutionDir)Reference\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)Reference\Library\$(Platform)$(Configuration)\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
@@ -89,14 +89,14 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)dist\$(Platform)$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Include\;$(SolutionDir)Reference\Include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)include\;$(SolutionDir)Reference\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)Reference\Library\$(Platform)$(Configuration)\;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)dist\$(Platform)$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)$(Configuration)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Include\;$(SolutionDir)Reference\Include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)include\;$(SolutionDir)Reference\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)Reference\Library\$(Platform)$(Configuration)\;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -170,14 +170,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Include\BuffPanel\Api.h" />
-    <ClInclude Include="..\..\Include\BuffPanel\BuffPanel.h" />
-    <ClInclude Include="..\..\Include\BuffPanel\Callback.h" />
-    <ClInclude Include="..\..\Include\BuffPanel\Client.h" />
+    <ClInclude Include="..\..\include\BuffPanel\Api.h" />
+    <ClInclude Include="..\..\include\BuffPanel\BuffPanel.h" />
+    <ClInclude Include="..\..\include\BuffPanel\Callback.h" />
+    <ClInclude Include="..\..\include\BuffPanel\Client.h" />
     <ClInclude Include="..\..\include\BuffPanel\Version.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\BuffPanelSdk\Client.cpp" />
+    <ClCompile Include="..\..\source\BuffPanelSdk\Client.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
