@@ -14,8 +14,10 @@ ipch/*
 # Build generated files.
 build/*
 dist/*
-reference/*
 node_modules/*
+
+# External files.
+reference/*
 
 # Configuration files.
 .env
