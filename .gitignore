@@ -12,10 +12,12 @@ ipch/*
 *.opendb
 
 # Build generated files.
-Build/*
-Dist/*
-Reference/*
+build/*
+dist/*
 node_modules/*
+
+# External files.
+reference/*
 
 # Configuration files.
 .env
