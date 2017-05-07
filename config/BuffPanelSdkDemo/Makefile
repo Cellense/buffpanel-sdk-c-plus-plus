@@ -27,7 +27,7 @@ LDFLAGS += $(if $(filter x86_64,$(PLATFORM)),$(if $(OS_IS_DARWIN),-arch x86_64,-
 LDLIBS += $(patsubst %,-l%$(if $(IS_DEBUG),d,),$(LIBRARY_NAMES))
 
 ifdef OS_IS_LINUX
-  LD_RUN_PATH = $ORIGIN
+  LD_RUN_PATH = $$ORIGIN
   export LD_RUN_PATH
 endif
 
