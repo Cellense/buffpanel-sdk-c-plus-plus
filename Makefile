@@ -1,72 +1,62 @@
-OUTPUT_FILES = BuffPanelSdkDemo
-OUTPUT_CONFIGURATIONS = debug release
-
-LIBRARY_FILE_NAME = libBuffPanelSdk
-
+BUILD_DIR = build
+DIST_DIR = dist
 INCLUDE_DIR = include
-HEADER_FILE_PATHS = $(wildcard $(INCLUDE_DIR)/BuffPanel/*.h)
-
-CXXFLAGS = -Wall -std=c++11 -I$(INCLUDE_DIR)
-
-OS_NAME = $(shell uname -s)
-ifeq ($(OS_NAME),Linux)
-
-OS_IS_LINUX = 1
-
-CC = g++
-CXX = g++
-
-LIBRARY_FILE_EXT = .so
-OUTPUT_TARGETS = linux_i386 linux_x64_86
-
-SHARED_LIB_OPTION = -shared
-
-else
-
-ifeq ($(OS_NAME),Darwin)
-
-OS_IS_DARWIN = 1
+REFERENCE_DIR = reference
+REFERENCE_INCLUDE_DIR = $(REFERENCE_DIR)/include
+REFERENCE_LIBRARY_DIR = $(REFERENCE_DIR)/library
+SOURCE_DIR = source
 
 CC = clang++
 CXX = clang++
-LDFLAGS += -arch i386 -arch x86_64
-CXXFLAGS += -stdlib=libc++ -arch i386 -arch x86_64
+CXXFLAGS = -Wall -std=c++11
 
-LIBRARY_FILE_EXT = .dylib
-OUTPUT_TARGETS = macosx_unilib
+OS_NAME = $(shell uname -s)
+ifeq ($(OS_NAME),Linux)
+  OS_IS_LINUX = 1
+  OS_NAME = Linux
 
-SHARED_LIB_OPTION = -dynamiclib
-
+  SHARED_LIB_FILE_EXT = .so
+  SHARED_LIB_LDFLAGS = -shared
 else
--install_name "@loader_path/libBuffPanelSdk.dylib"
-all:
-	@echo "ERROR: This is not a supported platform" ||:
+ifeq ($(OS_NAME),Darwin)
+  OS_IS_DARWIN = 1
+  OS_NAME = MacOSX
 
+  SHARED_LIB_FILE_EXT = .dylib
+  SHARED_LIB_LDFLAGS = -dynamiclib
+
+  CXXFLAGS += -stdlib=libc++
+else
+  $(error The platform '$(OS_NAME)' is not supported)
+endif
 endif
 
-endif
+export BUILD_DIR
+export DIST_DIR
+export INCLUDE_DIR
+export REFERENCE_DIR
+export REFERENCE_INCLUDE_DIR
+export REFERENCE_LIBRARY_DIR
+export SOURCE_DIR
+export CC
+export CXX
+export CXXFLAGS
+export OS_NAME
+export OS_IS_LINUX
+export OS_IS_DARWIN
+export SHARED_LIB_FILE_EXT
+export SHARED_LIB_LDFLAGS
 
-all: $(foreach OUTPUT_TARGET,$(OUTPUT_TARGETS),\
-		$(foreach OUTPUT_CONFIGURATION,$(OUTPUT_CONFIGURATIONS),\
-		$(foreach OUTPUT_FILE,$(OUTPUT_FILES),\
-		dist/$(OUTPUT_TARGET)_$(OUTPUT_CONFIGURATION)/ \
-		dist/$(OUTPUT_TARGET)_$(OUTPUT_CONFIGURATION)/$(LIBRARY_FILE_NAME)$(if $(filter debug,$(OUTPUT_CONFIGURATION)),d,)$(LIBRARY_FILE_EXT) \
-		dist/$(OUTPUT_TARGET)_$(OUTPUT_CONFIGURATION)/$(OUTPUT_FILE))))
+all: BuffPanelSdk BuffPanelSdkDemo
 
-include config/BuffPanelSdkDemo/BuffPanelSdkDemo.mk
-include config/BuffPanelSdk/BuffPanelSdk.mk
-
-build/%/:
-# Create the build directory.
-	mkdir -p $@
-
-dist/%/:
-# Create the dist directory.
-	mkdir -p $@
-
-.SECONDARY: $(foreach BUILD_DIR,$(wildcard build/*),$(BUILD_DIR))
+BuffPanelSdk BuffPanelSdkDemo:
+# Build the given project for all configurations.
+	$(MAKE) -C config/$@ PLATFORM=i386 CONFIGURATION=Debug
+	$(MAKE) -C config/$@ PLATFORM=i386 CONFIGURATION=Release
+	$(MAKE) -C config/$@ PLATFORM=x86_64 CONFIGURATION=Debug
+	$(MAKE) -C config/$@ PLATFORM=x86_64 CONFIGURATION=Release
 
 clean:
 # Clear the build and dist directories.
-	rm -rf build
-	rm -rf dist
+	rm -rf $(BUILD_DIR)
+	rm -rf $(DIST_DIR)
