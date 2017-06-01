@@ -88,6 +88,7 @@ As mentioned above the binaries that are built target the current platform / arc
 
 These are the 3rd libraries currently used within the SDK, please visit the vendor's site to learn more:
 - [Poco 1.7.8p2](https://pocoproject.org/)
+
 Note that there is no need to include this into your project, if you're using our prebuilt binaries as those have all external dependencies statically linked and are thus self sufficient.
 
 ## Implementation details
