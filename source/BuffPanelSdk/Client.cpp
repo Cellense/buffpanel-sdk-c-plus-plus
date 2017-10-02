@@ -27,7 +27,7 @@ const std::string BuffPanel::Client::_version(BUFFPANEL_SDK_VERSION);
 void BuffPanel::Client::track(
 	const std::string& gameToken,
 	const std::string& playerToken,
-	const bool isRepeated,
+	const bool isExistingPlayer,
 	const std::map<std::string, std::string>& attributes,
 	const Callback& callback
 ) {
@@ -54,7 +54,7 @@ void BuffPanel::Client::track(
 		Poco::JSON::Object jsonPayload;
 		jsonPayload.set("game_token", _gameToken);
 		jsonPayload.set("player_token", _playerToken);
-		jsonPayload.set("is_repeated", isRepeated);
+		jsonPayload.set("is_existing_player", isExistingPlayer);
 		jsonPayload.set("attributes", jsonAttributes);
 		jsonPayload.set("version", _version);
 

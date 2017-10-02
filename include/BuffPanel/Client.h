@@ -23,10 +23,10 @@ namespace BuffPanel {
 		static void track(
 			const std::string& gameToken,
 			const std::string& playerToken,
-			const bool isRepeated,
+			const bool isExistingPlayer,
 			const Callback& callback
 		) {
-			track(gameToken, playerToken, isRepeated, std::map<std::string, std::string>(), callback);
+			track(gameToken, playerToken, isExistingPlayer, std::map<std::string, std::string>(), callback);
 		}
 
 		static void track(
@@ -41,7 +41,7 @@ namespace BuffPanel {
 		static BUFFPANEL_SDK_API void track(
 			const std::string& gameToken,
 			const std::string& playerToken,
-			const bool isRepeated = false,
+			const bool isExistingPlayer = false,
 			const std::map<std::string, std::string>& attributes = std::map<std::string, std::string>(),
 			const Callback& callback = DefaultCallback()
 		);

@@ -113,7 +113,7 @@ during registration.
 - a `playerToken`, which is a unique string identifier for the current user of your game. This could be anything
 you choose (an email address, Steam Id, etc), as long as it's unique for the given user and you use it consistantly.
 The string is currently limited to a maximum length of 64 characters.
-- the `isRepeated` boolean flag, indicating whether the current user has run the game before. This is important if
+- the `isExistingPlayer` boolean flag, indicating whether the current user has run the game before. This is important if
 you already had users before you started using BuffPanel. Without this information, our service would treat any old
 user it didn't see before as a new user, who had just started playing the game recently. Otherwise (i.e. you've
 started using BuffPanel before launchin) it can be omitted.
