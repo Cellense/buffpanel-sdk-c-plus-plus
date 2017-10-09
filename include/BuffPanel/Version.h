@@ -1,1 +1,1 @@
-#define BUFFPANEL_SDK_VERSION "cplusplus_0.1.2"
+#define BUFFPANEL_SDK_VERSION "c-plus-plus_0.1.2"
