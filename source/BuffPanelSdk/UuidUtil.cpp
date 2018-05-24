@@ -76,6 +76,7 @@ bool BuffPanel::UuidUtil::saveUuid(std::string uuid)
 	}
 	file.createFile();
 	Poco::FileOutputStream outStream(file.path());
+	outStream << uuid << std::endl;
 	outStream.close();
 	return true;
 }
