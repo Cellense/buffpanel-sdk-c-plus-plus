@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 	bool isSuccessful;
 
 	// Track a simple run event.
-	BuffPanel::Client::track("demo_game", "demo_player", DemoCallback(isSuccessful));
+	BuffPanel::Client::track(std::string("demo_game"), false, DemoCallback(isSuccessful));
 	
 	// Exit the application.
 	return isSuccessful
