@@ -22,7 +22,7 @@
     <ProjectGuid>{1D540692-F4B3-4D2B-A78B-7D2E3196E191}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BuffPanelSdk</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -107,11 +107,13 @@
       <PreprocessorDefinitions>POCO_STATIC;WIN32;_DEBUG;_WINDOWS;_USRDLL;BUFFPANEL_SDK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\poco\Net\include\;C:\poco\JSON\include\;C:\poco\Foundation\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\poco\lib\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -174,10 +176,12 @@
     <ClInclude Include="..\..\include\BuffPanel\BuffPanel.h" />
     <ClInclude Include="..\..\include\BuffPanel\Callback.h" />
     <ClInclude Include="..\..\include\BuffPanel\Client.h" />
+    <ClInclude Include="..\..\include\BuffPanel\UuidUtil.h" />
     <ClInclude Include="..\..\include\BuffPanel\Version.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\BuffPanelSdk\Client.cpp" />
+    <ClCompile Include="..\..\source\BuffPanelSdk\UuidUtil.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
