@@ -14,33 +14,29 @@ namespace BuffPanel {
 	public:
 		static void track(
 			const std::string& gameToken,
-			const std::string& playerToken,
 			const Callback& callback
 		) {
-			track(gameToken, playerToken, false, callback);
+			track(gameToken, false, callback);
 		}
 
 		static void track(
 			const std::string& gameToken,
-			const std::string& playerToken,
 			const bool isExistingPlayer,
 			const Callback& callback
 		) {
-			track(gameToken, playerToken, isExistingPlayer, std::map<std::string, std::string>(), callback);
+			track(gameToken, isExistingPlayer, std::map<std::string, std::string>(), callback);
 		}
 
 		static void track(
 			const std::string& gameToken,
-			const std::string& playerToken,
 			const std::map<std::string, std::string>& attributes,
 			const Callback& callback = DefaultCallback()
 		) {
-			track(gameToken, playerToken, false, attributes, callback);
+			track(gameToken, false, attributes, callback);
 		}
 
 		static BUFFPANEL_SDK_API void track(
 			const std::string& gameToken,
-			const std::string& playerToken,
 			const bool isExistingPlayer = false,
 			const std::map<std::string, std::string>& attributes = std::map<std::string, std::string>(),
 			const Callback& callback = DefaultCallback()
@@ -48,6 +44,7 @@ namespace BuffPanel {
 	private:
 		static const std::string _endpointUrl;
 		static const std::string _version;
+		static const std::string _UuidPersistPath;
 	};
 }
 

@@ -3,6 +3,8 @@
 
 // Include internal headers.
 #include <BuffPanel/Version.h>
+#include <BuffPanel/UuidUtil.h>
+
 
 // Include poco headers.
 #include <Poco/Exception.h>
@@ -13,28 +15,49 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
+#include <Poco/UUIDGenerator.h>
+#include <Poco/Path.h>
+#include <Poco/UUID.h>
 
 // Include standard headers.
 #include <istream>
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <stdio.h>
+#include <comutil.h>
+#include <fstream>
 
 // Define static constants.
-const std::string BuffPanel::Client::_endpointUrl("http://api.buffpanel.com/run_event/create");
+const std::string BuffPanel::Client::_endpointUrl(/*"http://api.buffpanel.com/run_event/create"*/ "asdf");
 const std::string BuffPanel::Client::_version(BUFFPANEL_SDK_VERSION);
 
 void BuffPanel::Client::track(
 	const std::string& gameToken,
-	const std::string& playerToken,
 	const bool isExistingPlayer,
 	const std::map<std::string, std::string>& attributes,
 	const Callback& callback
 ) {
 	// Create local copies of the passed parameters.
 	const std::string _gameToken(gameToken);
-	const std::string _playerToken(playerToken);
 	const std::map<std::string, std::string> _attributes(attributes);
+
+	std::string uuid;
+
+	try {
+		uuid = BuffPanel::UuidUtil::readSavedUuid();
+
+		Poco::UUID pocoUuid;
+		if (!pocoUuid.tryParse(uuid)) {
+			uuid = BuffPanel::UuidUtil::generateUuid();
+			BuffPanel::UuidUtil::saveUuid(uuid);
+		}
+	}
+	catch (Poco::Exception& exception) {
+		callback.error("An error occured while attempting read or persist UUID: " + exception.displayText());
+	}
+
+	const std::string _playerToken(uuid);
 
 	try {
 		// Parse the endpoint URI.
@@ -83,16 +106,18 @@ void BuffPanel::Client::track(
 		std::istream& responsePayloadStream = session.receiveResponse(response);
 		Poco::JSON::Parser jsonParser;
 		jsonParser.parse(responsePayloadStream);
-				
+
 		// Validate the response.
 		if (response.getStatus() == Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK) {
 			// Notify the callback object that the event was successfully processed.
 			callback.success();
-		} else {
+		}
+		else {
 			// Notify the callback object that the server failed to process the request.
 			callback.error("An invalid response was recieved from the server.");
-		}		
-	} catch (Poco::Exception& exception) {
+		}
+	}
+	catch (Poco::Exception& exception) {
 		// Notify the callback object that an error occured while attempting to communicate with the server.
 		callback.error("An error occured while attempting to communicate with the server: " + exception.displayText());
 	}
