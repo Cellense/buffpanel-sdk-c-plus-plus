@@ -24,12 +24,11 @@
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <stdio.h>
 #include <comutil.h>
 #include <fstream>
 
 // Define static constants.
-const std::string BuffPanel::Client::_endpointUrl(/*"http://api.buffpanel.com/run_event/create"*/ "asdf");
+const std::string BuffPanel::Client::_endpointUrl("http://staging.api.buffpanel.com/run_event/create");
 const std::string BuffPanel::Client::_version(BUFFPANEL_SDK_VERSION);
 
 void BuffPanel::Client::track(
@@ -39,25 +38,19 @@ void BuffPanel::Client::track(
 	const Callback& callback
 ) {
 	// Create local copies of the passed parameters.
-	const std::string _gameToken(gameToken);
-	const std::map<std::string, std::string> _attributes(attributes);
-
-	std::string uuid;
-
-	try {
-		uuid = BuffPanel::UuidUtil::readSavedUuid();
-
-		Poco::UUID pocoUuid;
-		if (!pocoUuid.tryParse(uuid)) {
-			uuid = BuffPanel::UuidUtil::generateUuid();
-			BuffPanel::UuidUtil::saveUuid(uuid);
-		}
+	const std::string& _gameToken(gameToken);
+	const std::map<std::string, std::string>& _attributes(attributes);
+	const bool _isExistingPlayer(isExistingPlayer);
+	
+	std::string _playerToken;
+	try 
+	{
+		_playerToken = BuffPanel::UuidUtil::getPlayerToken(gameToken);
 	}
 	catch (Poco::Exception& exception) {
+		_playerToken = "unknown_player";
 		callback.error("An error occured while attempting read or persist UUID: " + exception.displayText());
 	}
-
-	const std::string _playerToken(uuid);
 
 	try {
 		// Parse the endpoint URI.
@@ -77,7 +70,7 @@ void BuffPanel::Client::track(
 		Poco::JSON::Object jsonPayload;
 		jsonPayload.set("game_token", _gameToken);
 		jsonPayload.set("player_token", _playerToken);
-		jsonPayload.set("is_existing_player", isExistingPlayer);
+		jsonPayload.set("is_existing_player", _isExistingPlayer);
 		jsonPayload.set("attributes", jsonAttributes);
 		jsonPayload.set("version", _version);
 

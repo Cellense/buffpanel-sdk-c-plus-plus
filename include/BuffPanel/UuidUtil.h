@@ -8,11 +8,13 @@
 namespace BuffPanel {
 	const static std::string UUID_FILE_NAME = "uuid";
 	class UuidUtil {
-	public:
+	private:
 		static std::string generateUuid();
-		static Poco::Path getUuidPersistPath();
-		static std::string readSavedUuid();
-		static bool saveUuid(std::string uuid);
+		static std::string getUuidPersistPath();
+		static std::string readSavedUuid(const std::string& path);
+		static void saveUuid(const std::string& filePath, const std::string& folderPath, const std::string& uuid);
+	public:
+		static std::string getPlayerToken(const std::string& gameToken);
 	};
 }
 #endif

@@ -44,7 +44,6 @@ namespace BuffPanel {
 	private:
 		static const std::string _endpointUrl;
 		static const std::string _version;
-		static const std::string _UuidPersistPath;
 	};
 }
 

@@ -16,7 +16,7 @@ std::string BuffPanel::UuidUtil::generateUuid()
 	return Poco::UUIDGenerator().createRandom().toString();
 }
 
-Poco::Path BuffPanel::UuidUtil::getUuidPersistPath()
+std::string BuffPanel::UuidUtil::getUuidPersistPath()
 {
 	Poco::Path uuidPersistPath;
 #ifdef _WIN32 
@@ -36,48 +36,61 @@ Poco::Path BuffPanel::UuidUtil::getUuidPersistPath()
 	}
 #elif __APPLE__
 	uuidPersistPath = Poco::Path(Poco::Path::home());
-	uuidPersistPath.pushDirectory("Library");
-	uuidPersistPath.pushDirectory("Application Support");
-	uuidPersistPath.pushDirectory(vendorName);
-	uuidPersistPath.pushDirectory(applicationName);
+	uuidPersistPath.pushDirectory(".local");
+	uuidPersistPath.pushDirectory("BuffPanel");
 #elif __linux__
 	uuidPersistPath = Poco::Path(Poco::Path::home());
-	uuidPersistPath.pushDirectory("." + "BuffPanel");
+	uuidPersistPath.pushDirectory(".local");
+	uuidPersistPath.pushDirectory("BuffPanel");
 #endif
-	return uuidPersistPath;
+	return uuidPersistPath.toString();
 }
 
-std::string BuffPanel::UuidUtil::readSavedUuid()
+std::string BuffPanel::UuidUtil::readSavedUuid(const std::string& path)
 {
-	std::string path = getUuidPersistPath().toString() + UUID_FILE_NAME;
-
-	if (!Poco::File(path).exists() || !Poco::File(path).canRead()) {
+	if (!Poco::File(path).exists() || !Poco::File(path).canRead()) 
+	{
 		return std::string("");
 	}
 	std::string result;
 	Poco::FileInputStream inStream(path);
 	Poco::StreamCopier::copyToString(inStream, result);
 	inStream.close();
+
+	Poco::UUID pocoUuid;
+	if (!pocoUuid.tryParse(result))
+		return std::string("");
+
 	return result;
 }
 
-bool BuffPanel::UuidUtil::saveUuid(std::string uuid)
+void BuffPanel::UuidUtil::saveUuid(const std::string& filePath, const std::string& folderPath, const std::string& uuid)
 {
-	std::string path = getUuidPersistPath().toString();
-
-	Poco::File buffPanelDir(path);
+	Poco::File buffPanelDir(folderPath);
 	buffPanelDir.createDirectory();
 
-	path = path + UUID_FILE_NAME;
-	Poco::File file(path);
+	Poco::File buffPanelFile(filePath);
 
-	if (file.exists()) {
-		file.remove();
+	if (buffPanelFile.exists())
+	{
+		buffPanelFile.remove();
 	}
-	file.createFile();
-	Poco::FileOutputStream outStream(file.path());
+	buffPanelFile.createFile();
+	Poco::FileOutputStream outStream(buffPanelFile.path());
 	outStream << uuid << std::endl;
 	outStream.close();
-	return true;
+}
+
+std::string BuffPanel::UuidUtil::getPlayerToken(const std::string& gameToken)
+{
+	const std::string folderPath = getUuidPersistPath();
+	const std::string filePath = folderPath + "uuid_" + gameToken;
+	std::string uuid = BuffPanel::UuidUtil::readSavedUuid(filePath);
+	if (uuid.empty())
+	{
+		uuid = BuffPanel::UuidUtil::generateUuid();
+		BuffPanel::UuidUtil::saveUuid(filePath, folderPath, uuid);
+	}
+	return uuid;
 }
 
