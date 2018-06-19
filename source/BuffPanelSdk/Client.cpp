@@ -15,16 +15,12 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/UUIDGenerator.h>
-#include <Poco/Path.h>
-#include <Poco/UUID.h>
 
 // Include standard headers.
 #include <istream>
 #include <ostream>
 #include <sstream>
 #include <string>
-#include <comutil.h>
 #include <fstream>
 
 // Define static constants.
