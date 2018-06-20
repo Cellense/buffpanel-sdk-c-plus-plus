@@ -1,5 +1,6 @@
 // Include the sdk header.
 #include <BuffPanel/BuffPanel.h>
+#include <BuffPanel/UuidUtil.h>
 
 // Include the standard headers.
 #include <iostream>
@@ -30,7 +31,7 @@ int main(int argc, char* argv[]) {
 	bool isSuccessful;
 
 	// Track a simple run event.
-	BuffPanel::Client::track("demo_game", false, DemoCallback(isSuccessful));
+	BuffPanel::Client::track(std::string("demo_game"), false, DemoCallback(isSuccessful));
 	
 	// Exit the application.
 	return isSuccessful

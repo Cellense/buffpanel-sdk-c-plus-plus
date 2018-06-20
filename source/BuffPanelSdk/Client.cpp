@@ -23,6 +23,18 @@
 #include <string>
 #include <fstream>
 
+
+#include <Poco/UUIDGenerator.h>
+#include <Poco/File.h>
+#include <Poco/FileStream.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/Path.h>
+#ifdef _WIN32 
+#	include <Poco/UnicodeConverter.h>
+#	include <shlobj.h>
+#endif
+
+
 // Define static constants.
 const std::string BuffPanel::Client::_endpointUrl("http://staging.api.buffpanel.com/run_event/create");
 const std::string BuffPanel::Client::_version(BUFFPANEL_SDK_VERSION);
@@ -41,7 +53,7 @@ void BuffPanel::Client::track(
 	std::string _playerToken;
 	try 
 	{
-		_playerToken = BuffPanel::UuidUtil::getPlayerToken(gameToken);
+		_playerToken = BuffPanel::Client::getPlayerToken(gameToken);
 	}
 	catch (Poco::Exception& exception) {
 		_playerToken = "unknown_player";
@@ -110,4 +122,89 @@ void BuffPanel::Client::track(
 		// Notify the callback object that an error occured while attempting to communicate with the server.
 		callback.error("An error occured while attempting to communicate with the server: " + exception.displayText());
 	}
+}
+
+
+std::string BuffPanel::Client::generateUuid()
+{
+	return Poco::UUIDGenerator().createRandom().toString();
+}
+
+std::string BuffPanel::Client::getUuidPersistPath()
+{
+	Poco::Path uuidPersistPath;
+#ifdef _WIN32 
+	wchar_t wpath[MAX_PATH];
+	HRESULT rc = SHGetFolderPathW(
+		nullptr,
+		CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE,
+		nullptr, SHGFP_TYPE_CURRENT,
+		wpath);
+	if (SUCCEEDED(rc))
+	{
+		std::string localAppData;
+		Poco::UnicodeConverter::toUTF8(wpath, localAppData);
+		uuidPersistPath = Poco::Path(localAppData);
+		uuidPersistPath.makeDirectory();
+		uuidPersistPath.pushDirectory("BuffPanel");
+	}
+#elif __APPLE__
+	uuidPersistPath = Poco::Path(Poco::Path::home());
+	uuidPersistPath.pushDirectory(".local");
+	uuidPersistPath.pushDirectory("BuffPanel");
+#elif __linux__
+	uuidPersistPath = Poco::Path(Poco::Path::home());
+	uuidPersistPath.pushDirectory(".local");
+	uuidPersistPath.pushDirectory("BuffPanel");
+#endif
+	return uuidPersistPath.toString();
+}
+
+std::string BuffPanel::Client::readSavedUuid(const std::string& path)
+{
+	if (!Poco::File(path).exists() || !Poco::File(path).canRead())
+	{
+		return std::string("");
+	}
+	std::string result;
+	Poco::FileInputStream inStream(path);
+	Poco::StreamCopier::copyToString(inStream, result);
+	inStream.close();
+
+	Poco::UUID pocoUuid;
+	if (!pocoUuid.tryParse(result))
+		return std::string("");
+
+	return result;
+}
+
+void BuffPanel::Client::saveUuid(const std::string& filePath, const std::string& folderPath, const std::string& uuid)
+{
+	Poco::File buffPanelDir(folderPath);
+	buffPanelDir.createDirectory();
+
+	Poco::File buffPanelFile(filePath);
+
+	if (buffPanelFile.exists())
+	{
+		buffPanelFile.remove();
+	}
+	buffPanelFile.createFile();
+	Poco::FileOutputStream outStream(buffPanelFile.path());
+	outStream << uuid << std::endl;
+	outStream.close();
+
+}
+
+std::string BuffPanel::Client::getPlayerToken(const std::string& gameToken)
+{
+	const std::string folderPath = getUuidPersistPath();
+	const std::string filePath = folderPath + "uuid_" + gameToken;
+	std::string uuid = readSavedUuid(filePath);
+	if (uuid.empty())
+	{
+		uuid = generateUuid();
+		saveUuid(filePath, folderPath, uuid);
+	}
+	return uuid;
 }

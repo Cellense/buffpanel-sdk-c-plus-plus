@@ -1,13 +1,13 @@
-#include "BuffPanel/UuidUtil.h"
+#include <BuffPanel/UuidUtil.h>
 
 #include <Poco/UUIDGenerator.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
 #include <Poco/StreamCopier.h>
-#include <shlobj.h>
 #include <Poco/Path.h>
 #ifdef _WIN32 
 #	include <Poco/UnicodeConverter.h>
+#	include <shlobj.h>
 #endif
 
 
@@ -22,9 +22,9 @@ std::string BuffPanel::UuidUtil::getUuidPersistPath()
 #ifdef _WIN32 
 	wchar_t wpath[MAX_PATH];
 	HRESULT rc = SHGetFolderPathW(
-		NULL,
+		nullptr,
 		CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE,
-		NULL, SHGFP_TYPE_CURRENT,
+		nullptr, SHGFP_TYPE_CURRENT,
 		wpath);
 	if (SUCCEEDED(rc))
 	{
@@ -93,4 +93,3 @@ std::string BuffPanel::UuidUtil::getPlayerToken(const std::string& gameToken)
 	}
 	return uuid;
 }
-

@@ -44,7 +44,12 @@ namespace BuffPanel {
 	private:
 		static const std::string _endpointUrl;
 		static const std::string _version;
+
+		static std::string getPlayerToken(const std::string& gameToken);
+		static std::string generateUuid();
+		static std::string getUuidPersistPath();
+		static std::string readSavedUuid(const std::string& path);
+		static void saveUuid(const std::string& filePath, const std::string& folderPath, const std::string& uuid);
 	};
 }
-
 #endif
