@@ -30,15 +30,9 @@
     <ClInclude Include="..\..\include\BuffPanel\Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\BuffPanel\UuidUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\BuffPanelSdk\Client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\BuffPanelSdk\UuidUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

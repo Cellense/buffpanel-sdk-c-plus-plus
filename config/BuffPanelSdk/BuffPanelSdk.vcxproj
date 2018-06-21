@@ -176,12 +176,10 @@
     <ClInclude Include="..\..\include\BuffPanel\BuffPanel.h" />
     <ClInclude Include="..\..\include\BuffPanel\Callback.h" />
     <ClInclude Include="..\..\include\BuffPanel\Client.h" />
-    <ClInclude Include="..\..\include\BuffPanel\UuidUtil.h" />
     <ClInclude Include="..\..\include\BuffPanel\Version.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\BuffPanelSdk\Client.cpp" />
-    <ClCompile Include="..\..\source\BuffPanelSdk\UuidUtil.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

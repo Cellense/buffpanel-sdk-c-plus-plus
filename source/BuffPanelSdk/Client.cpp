@@ -36,7 +36,7 @@
 
 
 // Define static constants.
-const std::string BuffPanel::Client::_endpointUrl("http://staging.api.buffpanel.com/run_event/create");
+const std::string BuffPanel::Client::_endpointUrl("http://api.buffpanel.com/run_event/create");
 const std::string BuffPanel::Client::_version(BUFFPANEL_SDK_VERSION);
 
 void BuffPanel::Client::track(
