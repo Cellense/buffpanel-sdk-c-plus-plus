@@ -1,6 +1,5 @@
 // Include the sdk header.
 #include <BuffPanel/BuffPanel.h>
-#include <BuffPanel/UuidUtil.h>
 
 // Include the standard headers.
 #include <iostream>
