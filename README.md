@@ -154,7 +154,6 @@ std::map<string, string> attributes = {
 
 BuffPanel::Client::track(
   "tetris_ultimate_4000", // buffpanel game token
-  "76561196418409112", // buffpanel player token
   true, // whether this is an existing player
   attributes // "attributes" containing the DLC tracking information
 );
