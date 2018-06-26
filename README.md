@@ -29,7 +29,7 @@ and used in your porject.
 
 There are three ways you can include the SDK into your game:
 1. Include the header files provided within the `Include` directory and one of the
-[prebuilt binaries](https://cellense.com/sdk/), which suits your target platform and configuration.
+prebuilt binaries (they are located in prebuilt folder in this repository), which suits your target platform and configuration.
 2. Include the header files provided within the `Include` directory and build the required binaries (its enough to
 build the `BuffPanelSdk` project). Bellow is a section detailing the specific build instructions for each of the
 supported platforms.
@@ -114,7 +114,7 @@ BuffPanel::Client::track(game_token, is_existing_player, attributes, [callback])
 - `attributes` are a *std::map<string, string>* value, that carry any additional information valuable for you, for example purchased DLC list
 - `callback` is an optional `BuffPanel::Callback` function to be called after the tracking event is delivered
 
-Former `player_token` is no longer used, instead universally unique identifier (UUID) is generated and persisted on player's machine.
+Former `player_token` is no longer used, instead universally unique identifier (UUID) is generated and persisted on player's machine implicitly.
 
 
 ## How it works?
