@@ -54,9 +54,8 @@ void BuffPanel::Client::track(
 	{
 		_playerToken = BuffPanel::Client::getPlayerToken(gameToken);
 	}
-	catch (Poco::Exception& exception) {
+	catch (Poco::Exception&) {
 		_playerToken = "unknown_player";
-		callback.error("An error occured while attempting read or persist UUID: " + exception.displayText());
 	}
 
 	try {
@@ -161,10 +160,11 @@ std::string BuffPanel::Client::getUuidPersistPath()
 
 std::string BuffPanel::Client::readSavedUuid(const std::string& path)
 {
-	if (!Poco::File(path).exists() || !Poco::File(path).canRead())
-	{
+	if (!Poco::File(path).exists()) 
 		return std::string("");
-	}
+	if (!Poco::File(path).canRead())
+		return std::string("anonymous");
+	
 	std::string result;
 	Poco::FileInputStream inStream(path);
 	Poco::StreamCopier::copyToString(inStream, result);
