@@ -3,7 +3,6 @@
 
 // Include internal headers.
 #include <BuffPanel/Version.h>
-#include <BuffPanel/UuidUtil.h>
 
 
 // Include poco headers.
@@ -170,9 +169,8 @@ std::string BuffPanel::Client::readSavedUuid(const std::string& path)
 	Poco::FileInputStream inStream(path);
 	Poco::StreamCopier::copyToString(inStream, result);
 	inStream.close();
-
 	Poco::UUID pocoUuid;
-	if (!pocoUuid.tryParse(result))
+	if (result.length() != 37 || !pocoUuid.tryParse(result))
 		return std::string("");
 
 	return result;
